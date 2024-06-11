@@ -46,6 +46,12 @@ def est_plein(plateau):
             else:
                 return True
 
+#on va maintenant demander aux joueurs de faire un coup
+
+def demander_coup(joueur):
+    print("à toi de jouer")
+    ajouter_coup(plateau, ligne, colonne, joueur)
+
 plateau = initialiser_plateau()
 afficher_plateau(plateau)
 ajouter_coup(plateau, 0, 2, "X")
