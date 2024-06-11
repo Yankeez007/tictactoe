@@ -13,10 +13,7 @@ def afficher_plateau(plateau):
 
 #cree une fonction qui verifie les cases
 def est_libre(plateau, ligne, colonne):
-    if plateau[ligne, colonne]=="":
-        return True
-    else:
-        return False
+    return plateau[ligne, colonne]==""
 
 #on va cree une fonction qui ajoute un symbole au plateau
 def ajouter_coup(plateau, ligne, colonne, joueur):
