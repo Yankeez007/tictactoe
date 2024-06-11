@@ -13,13 +13,13 @@ def afficher_plateau(plateau):
 
 #cree une fonction qui verifie les cases
 def est_libre(plateau, ligne, colonne):
-    return plateau[ligne, colonne]==""
+    return plateau[ligne][colonne]==""
 
 #on va cree une fonction qui ajoute un symbole au plateau
 # joueur = 'X' soit 'O'
 def ajouter_coup(plateau, ligne, colonne, joueur):
     if est_libre(plateau, ligne, colonne):
-        plateau[ligne, colonne]=joueur
+        plateau[ligne][colonne]=joueur
     else:
         print("la case n'est pas libre")
 
@@ -39,6 +39,11 @@ def verifier_gagnant(plateau, joueur):
 
 plateau = initialiser_plateau()
 afficher_plateau(plateau)
+ajouter_coup(plateau, 0, 2, "X")
+print(est_libre(plateau, 0, 2))
+ajouter_coup(plateau, 0, 0, "X")
+ajouter_coup(plateau, 0, 1, "X")
+print(verifier_gagnant(plateau, "X"))
 
 
 ## ICI : PS C:\Users\youle>python tictactoe.py
