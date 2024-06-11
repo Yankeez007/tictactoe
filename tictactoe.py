@@ -37,6 +37,15 @@ def verifier_gagnant(plateau, joueur):
     if (plateau[0][2]==joueur and plateau[1][1]==joueur and plateau[2][0]==joueur):
             return True
 
+#maintenant nous allons verifier si le plateau est rempli ou non
+def est_plein(plateau):
+    for i in range(3):
+        for j in range(3):
+            if plateau[i][j]=="":
+                return False
+            else:
+                return True
+
 plateau = initialiser_plateau()
 afficher_plateau(plateau)
 ajouter_coup(plateau, 0, 2, "X")
