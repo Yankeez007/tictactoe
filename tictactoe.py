@@ -8,7 +8,6 @@ def initialiser_plateau():
     return plateau 
 #on va maintenant l'afficher
 def afficher_plateau(plateau):
-    initialiser_plateau()
     for i in range(3):
         print(plateau[i])
 
@@ -18,3 +17,14 @@ def est_libre(plateau, ligne, colonne):
         return True
     else:
         return False
+
+#on va cree une fonction qui ajoute un symbole au plateau
+def ajouter_coup(plateau, ligne, colonne, joueur):
+    if est_libre(plateau, ligne, colonne):
+        plateau[ligne, colonne]=joueur
+
+plateau = initialiser_plateau()
+afficher_plateau(plateau)
+
+
+## ICI : PS C:\Users\youle>python tictactoe.py
