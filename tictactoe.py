@@ -2,10 +2,19 @@
 
 #on va cree le plateau de jeu
 def initialiser_plateau():
-    plateau = [["","",""],["","",""],["","",""]]
+    plateau = [["","",""],
+               ["","",""],
+               ["","",""]]
     return plateau 
 #on va maintenant l'afficher
 def afficher_plateau(plateau):
     initialiser_plateau()
     for i in range(3):
         print(plateau[i])
+
+#cree une fonction qui verifie les cases
+def est_libre(plateau, ligne, colonne):
+    if plateau[ligne, colonne]=="":
+        return True
+    else:
+        return False
