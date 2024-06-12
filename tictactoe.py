@@ -82,6 +82,7 @@ def jouer():
     while not est_plein(plateau) or (not verifier_gagnant(plateau, joueur1) or not verifier_gagnant(plateau, joueur2)):
         coup_j1 = demander_coup(joueur1)
         ajouter_coup(plateau, coup_j1[0], coup_j1[1], joueur1)
+
         coup_j2 = demander_coup(joueur2)
         ajouter_coup(plateau, coup_j2[0], coup_j2[1], joueur2)
         if est_plein(plateau):
@@ -108,6 +109,7 @@ print("est_plein(plateau) = ", est_plein(plateau))
 print("est_plein(plateau_plein) = ", est_plein(plateau_plein))
 #j1="x"
 #demander_coup(j1)
+jouer()
 
 
 ## ICI : PS C:\Users\youle>python tictactoe.py
