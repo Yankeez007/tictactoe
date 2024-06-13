@@ -51,13 +51,16 @@ def demander_coup(joueur):
     # la fonction va demander un coup au joueur et renvoi la position sous forme de tuple (ligne,colonne) ou -1 coup invalide
     print("au tour de :", joueur)
     position = input() # position -> '1 2' 
-    if len(position) != 3 :
-        print("coup invalide ! ")
-        return -1
-    ligne = int(position[0]) # 1 en int entre 0 et 2 
-    colonne = int(position[2]) # 2 en int entre 0 et 2
-    if ligne >= 0 and ligne <= 2 and colonne <= 2 and colonne >= 0 :
-        return (ligne, colonne)
+    #on va modifier la condition et faire au cas par cas (pour corriger l'erreur quand on rentre un coup invalide)
+    #on va utiliser la méthode .isdigit() car je viens de la voir dans les sites pythons et qu'elle est utile dans ce cas
+    if len(position) == 3 and position[1] == "" and position[0].isdigit() and position[2].isdigit():
+        ligne = int(position[0]) # 1 en int entre 0 et 2 
+        colonne = int(position[2]) # 2 en int entre 0 et 2
+        if ligne >= 0 and ligne <= 2 and colonne <= 2 and colonne >= 0 :
+            return (ligne, colonne)
+        else :
+            print("coup invalide ! ")
+            return -1    
     else :
         print("coup invalide !")
         return -1
