@@ -22,6 +22,7 @@ def ajouter_coup(plateau, ligne, colonne, joueur):
         plateau[ligne][colonne]=joueur
     else:
         print("la case n'est pas libre")
+        return -1
 
 #on va faire une fonction qui va verifier le gagnant de la partie donc avec les trois symboles alignés
 def verifier_gagnant(plateau, joueur):
@@ -30,12 +31,11 @@ def verifier_gagnant(plateau, joueur):
             return True
         elif (plateau[0][i]==joueur and plateau[1][i]==joueur and plateau[2][i]==joueur):
             return True
-        elif (plateau[i][i]==joueur and plateau[i][i]==joueur and plateau[i][i]==joueur):
+    if (plateau[0][0]==joueur and plateau[1][1]==joueur and plateau[2][2]==joueur):
             return True
-        else :
-            return False
-    if (plateau[0][2]==joueur and plateau[1][1]==joueur and plateau[2][0]==joueur):
+    elif (plateau[0][2]==joueur and plateau[1][1]==joueur and plateau[2][0]==joueur):
             return True
+    return False
 
 #maintenant nous allons verifier si le plateau est rempli ou non
 def est_plein(plateau):
@@ -50,10 +50,10 @@ def est_plein(plateau):
 def demander_coup(joueur):
     # la fonction va demander un coup au joueur et renvoi la position sous forme de tuple (ligne,colonne) ou -1 coup invalide
     print("au tour de :", joueur)
-    position = input() # position -> '1 2' 
+    position = input("Donnez votre coup :") # position -> '1 2' et on va aussi demander le coup directement dans le input
     #on va modifier la condition et faire au cas par cas (pour corriger l'erreur quand on rentre un coup invalide)
     #on va utiliser la méthode .isdigit() car je viens de la voir dans les sites pythons et qu'elle est utile dans ce cas
-    if len(position) == 3 and position[1] == "" and position[0].isdigit() and position[2].isdigit():
+    if (len(position) == 3) and (position[1] == " ") and (position[0].isdigit()) and (position[2].isdigit()):
         ligne = int(position[0]) # 1 en int entre 0 et 2 
         colonne = int(position[2]) # 2 en int entre 0 et 2
         if ligne >= 0 and ligne <= 2 and colonne <= 2 and colonne >= 0 :
@@ -80,26 +80,30 @@ def jouer():
     plateau = initialiser_plateau()
     joueur1 = "x"
     joueur2 = "o"
-    joueur_actuel = joueur1
+    joueur_actuel = joueur1 #cette variable va nous servir à alterner entre les deux joueurs
     i = 1 #on crée un indice qui va compter le nombre de tour dans la boucle
     while not est_plein(plateau) or (not verifier_gagnant(plateau, joueur1) or not verifier_gagnant(plateau, joueur2)):
-        afficher_plateau
+        afficher_plateau(plateau)
         coup = demander_coup(joueur_actuel) #prends la valeur de demander_coup sous la forme d'un couple (ligne,colonne) du joueur actuel
-        if ajouter_coup(plateau, coup[0], coup[1], joueur_actuel) == -1 :
-                print("coup invalide, veuillez réessayer.")
+        #une erreur "TypeError: 'int' object is not subscriptable" se produit car il prend en compte le -1 de la fontion demander_coup, ajustons cela
+        if coup != -1:
+            if ajouter_coup(plateau, coup[0], coup[1], joueur_actuel) == -1 : #si la fonction ajouter_coup renvoi -1 on va demander de reesayer
+                    continue #saute l'étape et va à l'itération suivante
+            else : 
+                if verifier_gagnant(plateau, joueur_actuel): #on verifie s'il y a un gagnant et si oui on return et ça met fin à la boucle
+                    afficher_plateau(plateau)
+                    return f"Le joueur {joueur_actuel} a gagné !"
+                elif est_plein(plateau): #pareil mais pour le plateau plein, on verifie si le plateau est plein
+                    afficher_plateau(plateau)
+                    return "Le plateau est plein, fin de parti, match nul"
+                #maintenant il faut passer au joueurs suivant
+                if joueur_actuel == joueur1: #on alterne entre les deux joueurs
+                    joueur_actuel = joueur2 
+                else :
+                    joueur_actuel = joueur1
+                i = i + 1 #le tour augmente de 1 à chaque passage dans la boucle si la partie n'est pas terminée
         else :
-            if verifier_gagnant(plateau, joueur_actuel):
-                afficher_plateau(plateau)
-                return f"Le joueur {joueur_actuel} a gagné !"
-            elif est_plein(plateau):
-                afficher_plateau(plateau)
-                return "Le plateau est plein, fin de parti, match nul"
-            #maintenant il faut passer au joueurs suivant
-            if joueur_actuel == joueur1:
-                joueur_actuel = joueur2 
-            else :
-                joueur_actuel = joueur1
-            i = i + 1
+            print("coup invalide, veuillez réesayer.")
     afficher_plateau(plateau)
     return "fin de la partie"
         
